@@ -1,0 +1,100 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Startsidan
+{% endblock %}
+
+
+{% block content %}
+
+Visar sidan {{ page }} av totalt {{ pages }}
+
+<div class="card">
+    <div class="card-header">
+        <h1>Alla personer</h1>
+        Sök: <form method="get">
+                <input type=text placeholder="search" value="{{ q }}" name="q">
+                <input class="btn" type=submit value="Sök">
+            </form>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>Namn
+                    <a href="{{  url_for('personerPage',sortColumn='namn',sortOrder='asc', q=q ) }}">
+                        <i class='bx bx-up-arrow-alt'></i>
+                    </a>
+                    <a href="{{  url_for('personerPage',sortColumn='namn',sortOrder='desc',q=q ) }}">
+                        <i class='bx bx-down-arrow-alt' ></i>
+                    </a>
+                </th>
+                <th>Postnummer
+                    <a href="{{  url_for('personerPage',sortColumn='postal',sortOrder='asc',q=q ) }}">
+                        <i class='bx bx-up-arrow-alt'></i>
+                    </a>
+                    <a href="{{  url_for('personerPage',sortColumn='postal',sortOrder='desc',q=q ) }}">
+                        <i class='bx bx-down-arrow-alt' ></i>
+                    </a>
+                </th>
+                <th>Stad
+                    <a href="{{  url_for('personerPage',sortColumn='city',sortOrder='asc',q=q ) }}">
+                        <i class='bx bx-up-arrow-alt'></i>
+                    </a>
+                    <a href="{{  url_for('personerPage',sortColumn='city',sortOrder='desc',q=q ) }}">
+                        <i class='bx bx-down-arrow-alt' ></i>
+                    </a>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for person in allaPersoner %}      
+                <tr>
+                    <td>{{ person.namn }}</td>
+                    <td>{{ person.postalcode }}</td>
+                    <td>{{ person.city }}</td>
+                    <td>
+                        <a href="{{ url_for('personPage', id=person.id )  }}"><i class='bx bx-edit'></i></a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('accountPage', id=person.id )  }}"><i class='bx bx-credit-card'></i></a>
+                    </td>
+            <tfooter>
+                <tr>
+                    <td>
+                        {% if has_prev %}
+                            <a class="btn" href="{{ url_for('personerPage', page=page-1, sortColumn=sortColumn, sortOrder=sortOrder, q=q ) }}">
+                                Prev                                
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    <td>
+                        {% if has_next %}
+                            <a class="btn" href="{{ url_for('personerPage', page=page+1, sortColumn=sortColumn, sortOrder=sortOrder,q=q) }}">
+                                Next                                
+                            </a>
+                        {% endif %}
+
+                    </td>
+                    <td></td>
+                </tr>
+            </tfooter>
+        </table>
+        
+
+
+            <a class="btn" href="{{ url_for('personNewPage')  }}">Create new</a>
+
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

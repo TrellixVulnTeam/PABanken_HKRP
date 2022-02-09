@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" asp-append-version="true">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css'  rel='stylesheet'>
+    <title>
+        {% block title %}
+        {% endblock %}
+       </title>
+       
+</head>
+<body>
+    <i class=''></i>
+    <div class="grid-container">
+        <header class="header">
+            <div class="header__avatar">
+                {{ current_user.email }}
+
+            </div>
+          </header>
+          <aside class="sidenav">
+              <div class="sidenav__logo">
+                <i class=" "></i>
+                <span class="sidenav__logo_name">PA-Banken</span>
+              </div>
+              <ul class="sidenav__list">
+                  <li class="sidenav__list-item {{ 'active' if activePage == 'startPage' }}">
+                      <a href="/">
+                          <i class="bx bx-list-ul"></i>
+                          Startsida</a>
+                  </li>
+
+                  <li class="sidenav__list-item {{ 'active' if activePage == 'personerPage' }}">
+                      <a href="{{ url_for('personerPage') }}">
+                          <i class="bx bx-cog"></i>
+                          Personer</a>
+                  </li>
+
+                {%  if current_user.is_authenticated    %}
+                <li class="sidenav__list-item">
+                    <a href="{{ url_for('user.logout') }}">
+                        <i class="bx bx-log-out"></i>
+                        Logout</a>
+                </li>
+
+                {%  else    %}
+                    <li class="sidenav__list-item">
+                    <a href="{{ url_for('user.login') }}">
+                        <i class="bx bx-log-out"></i>
+                        Logga in</a>
+                   </li>
+
+                   <li class="sidenav__list-item">
+                    <a href="{{ url_for('user.register') }}">
+                        <i class="bx bx-log-out"></i>
+                        Register</a>
+                   </li>
+
+
+                {%  endif    %}
+              </ul>
+          </aside>        
+        <main class="main">
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            {% block footer %}
+                <div class="footer__copyright">&copy; 2022 PA-Banken AB</div>
+                <div class="footer__signature">Thanks for using PA-Banken</div>
+            {% endblock %}
+        </footer>      
+    </div>
+
+
+
+</body>
+</html>

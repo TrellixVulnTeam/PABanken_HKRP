@@ -1,0 +1,67 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Startsidan
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <h1>Konton för {{ person.namn }}</h1>
+    </div>
+    <div class="card-body">
+        <table class="table" id="posts-table">
+            <tr>
+                <th>Typ
+                </th>
+                <th>Kontonummer
+                </th>
+                <th>Datum
+                </th>
+            </tr>
+            {% for theAccount in  accounts%}                    
+                <tr>
+                    <td>{{ theAccount.Account_nr }}</td>
+                    <td>{{ theAccount.PersonID }}</td>
+                    <td>{{ theAccount.Balance }}</td>
+                    <td>{{ theAccount.Datum }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        
+
+
+            <a class="btn" href="javascript:fetchMore();">Show 5 more</a>
+
+    </div>
+</div>
+
+
+
+<script>
+    pageNo = 2;
+    function fetchMore(){
+        url = "/api/{{ person.id }}/cards?page=" + pageNo;
+        fetch(url)
+            .then((response)=>response.json())            
+            .then((json)=>{
+                pageNo = pageNo + 1;
+                json.forEach(tableElement);
+            });
+        
+    }
+    function tableElement(element) {
+            document.querySelector('#posts-table tbody').innerHTML +=
+                `<tr>
+        <td>${element.cardtype}</td>
+        <td>${element.number}</td>
+        <td>${element.datum}</td>
+    </tr>`;
+        }
+
+</script>
+
+
+{% endblock %}
