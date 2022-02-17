@@ -140,17 +140,17 @@ def personNewPage():
 
 
 # ?page=4
-@app.route("/api/<id>/cards")
-def personCards(id):
+@app.route("/api/<id>/accounts")
+def personAccount(id):
     page = int(request.args.get('page',2))
-    listaMedCards = []
-    cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc())
-    paginationObject = cards.paginate(page,5,False)
-    # cards innehåller de 5 cardobjekt som ska visas
-    for card in paginationObject.items:
-        c = { "number": card.number, "cardtype": card.cardtype, "datum": card.Datum }
-        listaMedCards.append(c)
-    return jsonify(listaMedCards)
+    listWithAccounts = []
+    accounts = Accounts.query.filter(Accounts.PersonId == id).order_by(Accounts.Datum.desc())
+    paginationObject = accounts.paginate(page,5,False)
+    #  innehåller de 5 cardobjekt som ska visas
+    for account in paginationObject.items:
+        c = { "number": account.number, "datum": account.Datum }
+        listWithAccounts.append(c)
+    return jsonify(listWithAccounts)
     
 @app.route("/person/accounts/<id>",methods=["GET", "POST"])  
 def accountPage(id):
