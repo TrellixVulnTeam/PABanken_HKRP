@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect, jsonify
-from models import Accounts, db, Person, seedData,UserRegistration, CreditCard
+from models import Accounts, Transactions, db, Person, seedData,UserRegistration, CreditCard
 from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
@@ -159,13 +159,12 @@ def accountPage(id):
     paginationObject = accounts.paginate(1,5,False)
     return render_template('accountPage.html',person=personFromDb, accounts=paginationObject.items)
     
-
-# @app.route("/person/cards/<id>",methods=["GET", "POST"])  
-# def cardPage(id):
-#     personFromDb = Person.query.filter(Person.id == id).first()
-#     cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc())
-#     paginationObject = cards.paginate(1,5,False)
-#     return render_template('cardPage.html',person=personFromDb, cards=paginationObject.items)
+@app.route("/person/transactions/<id>",methods=["GET", "POST"])  
+def transactionPage(id):
+    accountFromDb = Accounts.query.filter(Accounts.id == id).first()
+    transactions = Transactions.query.filter(Transactions.AccountID == id).order_by(Transactions.Datum.desc())
+    paginationObject = transactions.paginate(1,10,False)
+    return render_template('transactions.html', account=accountFromDb ,transactions=paginationObject.items)    
 
 
 @app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3

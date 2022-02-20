@@ -1,7 +1,7 @@
 {% extends "basetemplate.html" %}
 
 {% block title %}
-Startsidan
+Transcations
 {% endblock %}
 
 
@@ -9,25 +9,25 @@ Startsidan
 
 <div class="card">
     <div class="card-header">
-        <h1>Konton för {{ person.namn }}</h1>
+        <h1>Transactions for {{ account.Account_nr }}</h1>
     </div>
     <div class="card-body">
         <table class="table" id="posts-table">
             <tr>
-                <th>Kontonummer
+                <th>Transaction No
                 </th>
-                <th>Balance
+                <th>Amount
                 </th>
-                <th>Datum
+                <th>Date
                 </th>
             </tr>
             <tbody>
-            {% for theAccount in  accounts%}                    
+            {% for transaction in  transactions%}                    
                 <tr>
-                    <td><a href="{{ url_for('transactionPage', id=theAccount.id )  }}"><i class='bx bx-edit'></i>>{{ theAccount.Account_nr }}</a></td>
+                    <td>{{ transaction.id }}</td>
                     <!-- <td>{{ theAccount.PersonID }}</td> -->
-                    <td>{{ theAccount.Balance }}</td>
-                    <td>{{ theAccount.Datum }}</td>
+                    <td>{{ transaction.Amount }}</td>
+                    <td>{{ transaction.Datum }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -35,7 +35,7 @@ Startsidan
         
 
 
-            <a class="btn" href="javascript:fetchMore();">Show 5 more</a>
+            <a class="btn" href="javascript:fetchMore();">Show 10 more</a>
 
     </div>
 </div>
@@ -44,7 +44,7 @@ Startsidan
 <script>
     pageNo = 2;
     function fetchMore(){
-        url = "/api/{{ person.id }}/accounts?page=" + pageNo;
+        url = "/api/{{ account.id }}/transactions?page=" + pageNo;
         fetch(url)
             .then((response)=>response.json())            
             .then((json)=>{
@@ -56,13 +56,15 @@ Startsidan
     function tableElement(element) {
             document.querySelector('#posts-table tbody').innerHTML +=
                 `<tr>
-        <td>${element.Account_nr}</td>
-        <td>${element.Balance}</td>
+        <td>${element.id}</td>
+        <td>${element.Amount}</td>
         <td>${element.Datum}</td>
     </tr>`;
         }
 
 </script>
+
+
 
 
 {% endblock %}
