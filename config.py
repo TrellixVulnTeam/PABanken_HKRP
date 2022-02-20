@@ -4,8 +4,8 @@ import sqlalchemy
 
 class ConfigDebug():
     SECRET_KEY = 'hammarbyisbest#team32'
-   #  SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:Lsafms01a!@localhost/PABanken'    # File-based SQL database
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root12345:Hejsan123#@pontus1918.mysql.database.azure.com/pontusbanken'    # File-based SQL database
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:Lsafms01a!@localhost/PABanken'    # File-based SQL database
+   #  SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root12345:Hejsan123#@pontus1918.mysql.database.azure.com/pontusbanken'    # File-based SQL database
     SQLALCHEMY_TRACK_MODIFICATION=FALSE
 
  # Flask-Mail SMTP server settings

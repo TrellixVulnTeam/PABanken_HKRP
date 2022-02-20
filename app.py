@@ -148,7 +148,7 @@ def personAccount(id):
     paginationObject = accounts.paginate(page,5,False)
     #  innehåller de 5 cardobjekt som ska visas
     for account in paginationObject.items:
-        c = { "number": account.number, "datum": account.Datum }
+        c = { "Account_nr": account.Account_nr, "Balance": account.Balance, "Datum": account.Datum }
         listWithAccounts.append(c)
     return jsonify(listWithAccounts)
     
