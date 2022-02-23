@@ -70,14 +70,18 @@ class Accounts(db.Model):
     PersonId = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     Balance = db.Column(db.Integer, nullable=True)
     Datum = db.Column(db.DateTime, unique=False, nullable=False)
+    # def __str__(self) -> str:
+    #     return self.Account_nr
 
 class Transactions(db.Model):
     __tablename__ = 'transactions'
     id = db.Column(db.Integer, primary_key=True)
-    AccountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), unique=True, nullable=False)
-    UserID = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    AccountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), unique=False, nullable=False)
+    PersonId = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     Amount = db.Column(db.Integer, default=0, unique=False, nullable=False)
     Datum = db.Column(db.DateTime, default= datetime.now, unique=False, nullable=False)
+
+    #Alembic 151f9e49473a
 
 user_manager = UserManager(None, db, User) 
 
@@ -111,9 +115,6 @@ def seedData():
             person.cards.append(c)
         db.session.commit()
 
-
-
-
 def AddRoleIfNotExists(namn:str): 
     if Role.query.filter(Role.name == namn).first():
         return
@@ -121,7 +122,6 @@ def AddRoleIfNotExists(namn:str):
     role.name = namn
     db.session.add(role)
     db.session.commit()
-
 
 def AddLoginIfNotExists(email:str, passwd:str, roles:list[str]):
     if User.query.filter(User.email == email).first():

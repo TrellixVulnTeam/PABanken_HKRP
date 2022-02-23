@@ -1,6 +1,7 @@
+# from wtforms.validators import Required
 from flask_wtf import FlaskForm
 from wtforms import Form, StringField, validators
-from wtforms.fields import IntegerField, SelectField, BooleanField
+from wtforms.fields import IntegerField, SelectField, BooleanField, DateTimeField, SubmitField
 
 class PersonEditForm(FlaskForm):
     name = StringField("name",[validators.Length(min=3, max=80, message="Skriv in mellan 2 och 80 tecken")])
@@ -31,3 +32,10 @@ class UserRegistrationForm(FlaskForm):
 
     pwdagain = StringField("pwdagain",[validators.Length(min=5, max=30)])
     updates = BooleanField("Send me important updates")
+
+class TransactionNewForm(FlaskForm):
+    AccountID = IntegerField("AccountID",[validators.NumberRange(1,99999)])
+    PersonId = IntegerField("PersonId",[validators.NumberRange(1,99999)])
+    Amount = IntegerField("Amount",[validators.NumberRange(-999999,999999)])
+    Datum = DateTimeField("Datum")
+   

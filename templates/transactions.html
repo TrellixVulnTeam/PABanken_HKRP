@@ -8,10 +8,12 @@ Transcations
 {% block content %}
 
 <div class="card">
+    
     <div class="card-header">
         <h1>Transactions for {{ account.Account_nr }}</h1>
     </div>
     <div class="card-body">
+        <div> <a class="btn-primary" href="{{url_for('transactionNew', id=account.id)}}"> Add transaction</a> </div>
         <table class="table" id="posts-table">
             <tr>
                 <th>Transaction No
@@ -25,7 +27,6 @@ Transcations
             {% for transaction in  transactions%}                    
                 <tr>
                     <td>{{ transaction.id }}</td>
-                    <!-- <td>{{ theAccount.PersonID }}</td> -->
                     <td>{{ transaction.Amount }}</td>
                     <td>{{ transaction.Datum }}</td>
                 </tr>

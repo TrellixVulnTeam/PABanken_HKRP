@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify
 from models import Accounts, Transactions, db, Person, seedData,UserRegistration, CreditCard
 from flask_migrate import Migrate, upgrade
 from random import randint
-from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
+from forms import PersonEditForm, PersonNewForm, UserRegistrationForm, TransactionNewForm
 from models import User, user_manager
 from flask_user import login_required, roles_required, roles_accepted
 
@@ -164,7 +164,7 @@ def transactionPage(id):
     accountFromDb = Accounts.query.filter(Accounts.id == id).first()
     transactions = Transactions.query.filter(Transactions.AccountID == id).order_by(Transactions.Datum.desc())
     paginationObject = transactions.paginate(1,10,False)
-    return render_template('transactions.html', account=accountFromDb ,transactions=paginationObject.items)    
+    return render_template('transactions.html', account=accountFromDb ,transactions=paginationObject.items)
 
 
 @app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3
@@ -231,7 +231,28 @@ def personerPage2():
                     allaPersoner=paginationObject.items, 
             activePage=activePage)
 
+@app.route("/transaction_new/<id>",methods=["GET", "POST"])  # EDIT   3
+# @roles_required("Admin")
+def transactionNew(id):
+    form = TransactionNewForm(request.form) 
+    accountFromDb = Accounts.query.filter(Accounts.id == id).first()
 
+    if request.method == "GET":
+        form.AccountID.data = accountFromDb.id
+        form.PersonId.data = accountFromDb.PersonId
+
+        
+        return render_template('transaction_new.html',account=accountFromDb, form=form)
+    if form.validate_on_submit():
+        AccountID = form.AccountID.data 
+        PersonId = form.PersonId.data 
+        Amount = form.Amount.data 
+        Datum = form.Datum.data 
+        transaction = Transactions(AccountID=AccountID, PersonId=PersonId, Amount=Amount, Datum=Datum )
+        db.session.add(transaction)
+        db.session.commit()
+        return redirect(url_for('personerPage'))
+    return render_template('transaction_new.html',account=accountFromDb, form=form)
 
 if __name__  == "__main__":
     with app.app_context():
