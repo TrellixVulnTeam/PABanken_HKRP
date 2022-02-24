@@ -29,11 +29,14 @@ def getPlayers():
 @app.route("/")
 def indexPage():
     activePage = "startPage"
-    
-    allaPersoner = Person.query.all()
-    #antalPersoner = Person count???
-    #totSaldo = 
-    return render_template('startPage.html', antalPersoner=12, totSaldo=999,activePage=activePage)
+    nr_of_persons = Person.query.all()
+    nr_of_persons = len(nr_of_persons)
+
+    transactions = Transactions.query.all()
+    total_balance=0
+    for t in transactions:
+        total_balance+=t.Amount
+    return render_template('startPage.html', antalPersoner=nr_of_persons , totSaldo=total_balance,activePage=activePage)
 
 # To improve: get med defaultvalue
 # search!
@@ -163,8 +166,11 @@ def accountPage(id):
 def transactionPage(id):
     accountFromDb = Accounts.query.filter(Accounts.id == id).first()
     transactions = Transactions.query.filter(Transactions.AccountID == id).order_by(Transactions.Datum.desc())
+    balance=0
+    for t in transactions:
+        balance+=t.Amount
     paginationObject = transactions.paginate(1,10,False)
-    return render_template('transactions.html', account=accountFromDb ,transactions=paginationObject.items)
+    return render_template('transactions.html', account=accountFromDb ,transactions=paginationObject.items, balance=balance)
 
 
 @app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3

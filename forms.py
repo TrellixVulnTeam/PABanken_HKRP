@@ -34,8 +34,8 @@ class UserRegistrationForm(FlaskForm):
     updates = BooleanField("Send me important updates")
 
 class TransactionNewForm(FlaskForm):
-    AccountID = IntegerField("AccountID",[validators.NumberRange(1,99999)])
-    PersonId = IntegerField("PersonId",[validators.NumberRange(1,99999)])
+    AccountID = IntegerField("Account ID",[validators.NumberRange(1,99999)])
+    PersonId = IntegerField("Person ID",[validators.NumberRange(1,99999)])
     Amount = IntegerField("Amount",[validators.NumberRange(-999999,999999)])
     Datum = DateTimeField("Datum")
    

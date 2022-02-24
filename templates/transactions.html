@@ -10,17 +10,19 @@ Transcations
 <div class="card">
     
     <div class="card-header">
-        <h1>Transactions for {{ account.Account_nr }}</h1>
+        <h1>Transaktioner för konto {{ account.Account_nr }}</h1>
     </div>
     <div class="card-body">
-        <div> <a class="btn-primary" href="{{url_for('transactionNew', id=account.id)}}"> Add transaction</a> </div>
+        <div> <a class="btn" href="{{url_for('transactionNew', id=account.id)}}"> Utför transaktion</a> </div>
+        <br> 
+        <h4> Balance {{ balance }} </h4>
         <table class="table" id="posts-table">
             <tr>
-                <th>Transaction No
+                <th>Transaktion Nr
                 </th>
-                <th>Amount
+                <th>Belopp
                 </th>
-                <th>Date
+                <th>Datum
                 </th>
             </tr>
             <tbody>
@@ -36,7 +38,8 @@ Transcations
         
 
 
-            <a class="btn" href="javascript:fetchMore();">Show 10 more</a>
+            <a class="btn" href="javascript:fetchMore();">Visa 10 till</a>
+            
 
     </div>
 </div>
