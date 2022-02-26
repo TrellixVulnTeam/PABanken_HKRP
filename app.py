@@ -16,15 +16,15 @@ user_manager.app = app
 user_manager.init_app(app,db,User)
 
 
-@app.route("/hej")
-def hejPage():
-    # på riktigt kolla om inloggad osv sov
-    lista = ["Stefan", "Oliver", "Josefine"]
-    return render_template('hej.html', inloggad=True, lista=lista,age=49, name="Stefan")
+# @app.route("/hej")
+# def hejPage():
+#     # på riktigt kolla om inloggad osv sov
+#     lista = ["Stefan", "Oliver", "Josefine"]
+#     return render_template('hej.html', inloggad=True, lista=lista,age=49, name="Stefan")
 
-@app.route("/players")
-def getPlayers():
-    return "Namn:Stefan, Adress:Testgatan 12"
+# @app.route("/players")
+# def getPlayers():
+#     return "Namn:Stefan, Adress:Testgatan 12"
 
 @app.route("/")
 def indexPage():
