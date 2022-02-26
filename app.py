@@ -90,10 +90,12 @@ def personerPage():
             pages=paginationObject.pages, 
             activePage=activePage)
 
+
 @app.route("/userconfirmation")
 def userConfirmationPage():
     namnet = request.args.get('namn',"")
     return render_template('userconfirmation.html',namn=namnet)
+
 
 @app.route("/newuser",methods=["GET", "POST"]) 
 def userRegistrationPage():
@@ -112,8 +114,6 @@ def userRegistrationPage():
         return redirect(url_for('userConfirmationPage', namn=form.firstname.data ))
 
     return render_template('userregistration.html',form=form)
-
-
 
 
 @app.route("/personnew",methods=["GET", "POST"]) 
@@ -155,6 +155,7 @@ def personAccount(id):
         listWithAccounts.append(c)
     return jsonify(listWithAccounts)
     
+
 @app.route("/person/accounts/<id>",methods=["GET", "POST"])  
 def accountPage(id):
     personFromDb = Person.query.filter(Person.id == id).first()
@@ -162,6 +163,7 @@ def accountPage(id):
     paginationObject = accounts.paginate(1,5,False)
     return render_template('accountPage.html',person=personFromDb, accounts=paginationObject.items)
     
+
 @app.route("/person/transactions/<id>",methods=["GET", "POST"])  
 def transactionPage(id):
     accountFromDb = Accounts.query.filter(Accounts.id == id).first()
