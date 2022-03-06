@@ -1,6 +1,6 @@
 import unittest
 from flask import Flask, render_template, request, url_for, redirect
-from app import app
+from application import app
 from models import db, Person
 
 class PersonerTestCases(unittest.TestCase):
