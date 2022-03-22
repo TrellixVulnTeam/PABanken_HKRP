@@ -150,7 +150,7 @@ def accountPage(id):
     personFromDb = Person.query.filter(Person.id == id).first()
     accounts = Accounts.query.filter(Accounts.PersonId == id).order_by(Accounts.Datum.desc())
     paginationObject = accounts.paginate(1,5,False)
-    return render_template('accountPage.html',person=personFromDb, accounts=paginationObject.items)
+    return render_template('accountpage.html',person=personFromDb, accounts=paginationObject.items)
     
 
 @app.route("/person/transactions/<id>",methods=["GET", "POST"])  
