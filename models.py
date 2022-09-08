@@ -123,7 +123,7 @@ def AddRoleIfNotExists(namn:str):
     db.session.add(role)
     db.session.commit()
 
-def AddLoginIfNotExists(email:str, passwd:str, roles:list[str]):
+def AddLoginIfNotExists(email, passwd, roles):
     if User.query.filter(User.email == email).first():
         return
     user = User()
